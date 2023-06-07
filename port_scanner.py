@@ -1,6 +1,6 @@
 import socket
 #list of ports
-ports = [20, 21, 23, 53, 80, 110, 119, 123, 143, 161, 194, 443]
+#ports = [20, 21, 23, 53, 80, 110, 119, 123, 143, 161, 194, 443]
 class port_scanner:
     # program information
     def __init__(self):
@@ -36,9 +36,11 @@ class port_scanner:
     # Port scanner option
     def port_scan(self):
         t = input("Enter target IP or website: ")
-        for p in ports:
+        end = int(input("Enter the end port you want scan: "))
+        speed = float(input("Enter The scan speed by second: "))
+        for p in range(1,end):
             s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-            s.settimeout(1)
+            s.settimeout(speed)
             r = s.connect_ex((t,p))
             if r == 0:
                 service = socket.getservbyport(p)
