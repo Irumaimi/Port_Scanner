@@ -1,6 +1,4 @@
 import socket
-#list of ports
-#ports = [20, 21, 23, 53, 80, 110, 119, 123, 143, 161, 194, 443]
 class port_scanner:
     # program information
     def __init__(self):
@@ -9,9 +7,7 @@ class port_scanner:
         print('********************************************************')
         print("Please, Select your option: ")
         print("1) Enter the website or the IP for target")
-        print("2) Add port in port list")
-        print("3) show existing port")
-        print("4) exit the program")
+        print("2) Exit The program")
         self.target()
     #the program options
     def target(self):
@@ -22,15 +18,9 @@ class port_scanner:
                     print("port scanner for website or ip ")
                     self.port_scan()
                 elif target == 2:
-                    print("Add New port on list")
-                    self.add_port()
-                elif target == 3:
-                    print("The existing port")
-                    self.exsisting_port()
-                elif target == 4:
                     break
                 else:
-                    print("choose between 1 , 2 , 3 or 4")
+                    print("choose between 1 or 2")
             except Exception:
                 print("You Enter not valid option")
     # Port scanner option
@@ -45,13 +35,6 @@ class port_scanner:
             if r == 0:
                 service = socket.getservbyport(p)
                 print("The port {} is open --> {}".format(p,service))
-    #add port in program to scan the target
-    def add_port(self):
-        item = int(input("Enter The port number: "))
-        ports.append(item)
-        print(ports)
-    # show the ports in program
-    def exsisting_port(self):
-        print(ports)
+
 #Run the class
 port = port_scanner()
