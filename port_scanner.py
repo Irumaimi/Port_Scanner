@@ -1,4 +1,5 @@
 import socket
+import dns.resolver
 class port_scanner:
     # program information
     def __init__(self):
@@ -13,11 +14,11 @@ class port_scanner:
     def target(self):
         while True:
             try:
-                target = int(input("Please, Enter your option: "))
-                if target == 1:
+                option = int(input("Please, Enter your option: "))
+                if option == 1:
                     print("port scanner for website or ip ")
                     self.port_scan()
-                elif target == 2:
+                elif option == 2:
                     break
                 else:
                     print("choose between 1 or 2")
@@ -25,16 +26,23 @@ class port_scanner:
                 print("You Enter not valid option")
     # Port scanner option
     def port_scan(self):
-        t = input("Enter target IP or website: ")
+        target = input("Enter target IP or website: ")
         end = int(input("Enter the end port you want scan: "))
         speed = float(input("Enter The scan speed by second: "))
-        for p in range(1,end):
+        for ports in range(1,end):
             s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
             s.settimeout(speed)
-            r = s.connect_ex((t,p))
+            r = s.connect_ex((target,ports))
             if r == 0:
-                service = socket.getservbyport(p)
-                print("The port {} is open --> {}".format(p,service))
+                service = socket.getservbyport(ports)
+                print("The port {} is open --> {}".format(ports,service))
+        #show the dns record for the target
+        types = ["A","AAAA","MX","NS","SOA","SRV","CNAME"]
+        for record in types:
+            d = dns.resolver.query(target,record,raise_on_no_answer=False)
+            if d.rrset != None:
+                print(d.rrset)
 
 #Run the class
 port = port_scanner()
+
